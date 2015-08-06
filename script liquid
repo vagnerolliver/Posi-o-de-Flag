@@ -1,0 +1,9 @@
+{% for tag in product.tag_names %}
+		{% if tag contains "flag" %}
+				{% assign flag = tag %}
+						{% tag id:tag %}
+								<img class="flag" src="{{ tag.image_url  }}">
+						{% endtag %}
+				{% break%}
+		{% endif %}
+	{% endfor %}
