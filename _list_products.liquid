@@ -1,14 +1,18 @@
+<!-- verifica se a página é página de tag ou busca -->
+<!-- percorre todas as tag do produto -->
+<-- verifica se existe alguma tag que inicia com 'flag' -->
+<!-- Se existir, chama a posição de banner com "flag" -->
+<!-- break para sair do laço for -->
 {% if template == "tag" %}
-	{% for tag in product.tag_names %}
-		{% if tag contains "flag" %}
-				{% assign flag = tag %}
-						{% banners position:flag limit:1%}
-								<img class="flag" src="{{ banner.file_url  }}">
-						{% endbanners %}
+	{% for flag in product.tag_names %}
+		{% if flag contains "flag" %}
+				{% banners position:flag limit:1%}
+						<img class="flag" src="{{ banner.file_url  }}">
+				{% endbanners %}
 				{% break%}
 		{% endif %}
 	{% endfor %}
-	{% else %}
-	// busca com o swiftype
-	<img class="flag" src="{{ product.flag-image }}">
-	{% endif %}
+{% elsif template == "search" %}
+<!-- flag na busca swiftype -->
+<img class="flag" src="{{ product.flag-image }}">
+{% endif %}
