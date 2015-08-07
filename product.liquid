@@ -1,0 +1,36 @@
+<!-- percorre todas as tag do produto -->
+<-- verifica se existe alguma tag que inicia com "flag" -->
+<!-- Se existir, chama a posição de banner com "flag" -->
+<!-- salva a variável tag_image com o valor da url da flag -->
+{% for flag in product.tag_names %}
+	{% if flag contains "flag" %}
+		{% banners position:flag limit:1 %}
+				{% assign tag_image =  banner.file_url  %}
+		{% endbanners %}
+		{% break%}
+	{% endif %}
+{% endfor %}
+
+<!-- configuraçao padrão usada para a indexação do swiftype ** ver no guides -->
+<!-- adiciona meta com name "flag-image" e content com o valor da variável "tag_image" -->
+	
+	{% contentfor meta_tags %}
+  <meta class="swiftype" name="image" data-type="enum" content="{{ product.image_url | resize: '200x200' }}" />
+  <!-- ### flag ### -->
+  <meta class="swiftype" name="flag-image" data-type="enum" content="{{ tag_image }}" />
+  <!-- ### flag ### -->
+  <!-- <meta class="swiftype" name="type" data-type="enum" content="page" /> -->
+  <meta class="swiftype" name="name" data-type="string" content="{{ product.name }}" />
+  <meta class="swiftype" name="reference" data-type="string" content="{{ product.reference }}" />
+  <meta class="swiftype" name="installments_count" data-type="float" content="{{ product.installments.size }}" />
+  {% if product.on_sale %}
+  <meta class="swiftype" name="price" data-type="float" content="{{ product | apply_discount }}" />
+  <meta class="swiftype" name="original-price" data-type="float" content="{{ product.price }}" />
+  {% else %}
+  <meta class="swiftype" name="price" data-type="float" content="{{ product.price }}" />
+  <meta class="swiftype" name="original-price" data-type="float" content="{{ product.price }}" />
+  {% endif %}
+  <meta class="swiftype" name="on_sale" data-type="enum" content="{{ product.on_sale }}" />
+  <meta class="swiftype" name="available" data-type="enum" content="{{ product.available }}" />
+  <meta class="swiftype" name="score_booster" data-type="float" content="{% if product.available %}1{% else %}0{% endif %}" />
+{% endcontentfor %}
