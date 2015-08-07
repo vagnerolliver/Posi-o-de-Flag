@@ -1,0 +1,14 @@
+{% if template == "tag" %}
+	{% for tag in product.tag_names %}
+		{% if tag contains "flag" %}
+				{% assign flag = tag %}
+						{% banners position:flag limit:1%}
+								<img class="flag" src="{{ banner.file_url  }}">
+						{% endbanners %}
+				{% break%}
+		{% endif %}
+	{% endfor %}
+	{% else %}
+	// busca com o swiftype
+	<img class="flag" src="{{ product.flag-image }}">
+	{% endif %}
